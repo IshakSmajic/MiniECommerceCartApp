@@ -43,3 +43,29 @@ const products = [
         price: 175
     }
 ]
+
+const productsContainer = document.getElementById("productsContainer");
+function renderProducts(){
+
+    productsContainer.innerHTML="";
+
+    products.forEach(product => {
+        const card = document.createElement("div");
+        card.classList.add("product");
+
+        const name = document.createElement("h3");
+        name.textContent = product.name;
+
+        const price = document.createElement("p");
+        price.textContent = `$${product.price}`;
+
+        const button = document.createElement("button");
+        button.textContent = "Add to cart";
+
+        card.appendChild(name);
+    card.appendChild(price);
+    card.appendChild(button);
+    productsContainer.appendChild(card);
+    });
+}
+renderProducts();
