@@ -66,5 +66,5 @@ function renderViewCartButton() {
   document.body.appendChild(mainCartButton);
 }
 
-
+//DO NOT MESS WITH IT; IT WILL BREAK
 renderProducts();

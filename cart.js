@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   renderCart();
-
+//create a checker that states there are no items in cart if cart is empty 
   backButton.addEventListener("click", () => {
     window.location.href = "main.html";
   });
