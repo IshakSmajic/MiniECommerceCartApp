@@ -10,23 +10,28 @@ const products = [
 
 
 const productsContainer = document.getElementById("productsContainer");
+const searchBar = document.getElementById("searchBar");
+const homeBtn = document.getElementById("homeBtn");
+const cartBtn = document.getElementById("cartBtn");
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 
 function addToCart(product) {
   const existing = cart.find(item => item.id === product.id);
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
+  if (existing) existing.quantity++;
+  else cart.push({ ...product, quantity: 1 });
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 
-function renderProducts() {
+function renderProducts(filter = "") {
   productsContainer.innerHTML = "";
 
-  products.forEach(product => {
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  filtered.forEach(product => {
     const card = document.createElement("div");
     card.classList.add("product");
 
@@ -49,22 +54,18 @@ function renderProducts() {
     productsContainer.appendChild(card);
   });
 
-  renderViewCartButton();
+  if (filtered.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent = "No products found.";
+    msg.style.textAlign = "center";
+    productsContainer.appendChild(msg);
+  }
 }
 
 
-function renderViewCartButton() {
-  const mainCartButton = document.createElement("button");
-  mainCartButton.textContent = "View Cart";
-  mainCartButton.classList.add("view-cart-btn");
+homeBtn.addEventListener("click", () => renderProducts());
+cartBtn.addEventListener("click", () => (window.location.href = "cart.html"));
+searchBar.addEventListener("input", e => renderProducts(e.target.value));
 
-  mainCartButton.addEventListener("click", () => {
-    window.location.href = "cart.html";
-  });
 
-  
-  document.body.appendChild(mainCartButton);
-}
-
-//DO NOT MESS WITH IT; IT WILL BREAK
 renderProducts();
